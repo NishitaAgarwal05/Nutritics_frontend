@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import image from "../images/final.png";
 import {Navbar, Nav, NavDropdown,Container} from "react-bootstrap";
+import {AiOutlineUserAdd} from "react-icons/ai";
+import {RiLoginBoxLine} from "react-icons/ri";
 // class component with constructor
 class NavBar extends Component {
   constructor(){
@@ -28,8 +30,10 @@ class NavBar extends Component {
                 <Nav.Link href="/dietPlan">Diet Plans</Nav.Link>
                 <Nav.Link href="/payments">Payments</Nav.Link>
                 <Nav.Link href="/userlist">User</Nav.Link>
-                <Nav.Link href="/registerUser">Register </Nav.Link>
-                <Nav.Link href="/login">Login</Nav.Link>
+              </Nav>
+              <Nav className="navbar-right">
+                <Nav.Link href="/registerUser"><AiOutlineUserAdd></AiOutlineUserAdd>Register </Nav.Link>
+                <Nav.Link href="/login"><RiLoginBoxLine></RiLoginBoxLine>Login</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
