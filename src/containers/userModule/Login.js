@@ -1,55 +1,61 @@
-import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-class Login extends Component {
-    state = {
-      
-         user_name: "",
-          password: "",
-          
+const Login = () => {
+  const navigate=useNavigate();
+    const [user,setUser]=useState({
+        userId:"",
+        password:""
+    });
+    
+    const handleChange=(e)=>{
+        setUser(user=>({
+            ...user,
+            [e.target.id]:e.target.value
         }
-      
 
-  OnSubmit = (event) =>{
-      //Login post 
-      event.preventDefault()
-     
-    //   axios.get(`localhost:8081/api/v1/user/authenticateUser?=loginid={user_name}`)
-
-  }  
-
- 
-
-
-    render() { 
-        return (
-
-            <div>
-                    <form onSubmit={this.OnSubmit} className="w-50 mx-auto border p-3 mt-3">
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                        <input onChange={(e)=>this.setState({user_name:e.target.value})} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="user_name" value={this.state.user_name}/>
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label" >Password</label>
-                        <input onChange={(e)=>this.setState({password:e.target.value})} type="password" className="form-control" id="exampleInputPassword1" name="password" value={this.state.password} />
-                    </div>
-                    <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                        <label className="form-check-label" htmlFor="exampleCheck1">Accept terms and conditions</label>
-                    </div>
-                    {/* <Link className="submit_button" to="\Admin"> */}
-                        
-                        <button type="submit" className="btn btn-success" >Sign in</button> 
-                        {/* </Link>  */}
-                   
-                    </form>
-
-            </div>
-        );
+        ))
     }
+
+     const handleSubmit=()=>{
+        async function submit(){
+          console.log(user);
+          let userData={};
+          await axios
+          .get(`https://nutritrics-backend.herokuapp.com/api/v1/user/authenticateUser?loginid=${user.userId}&password=${user.password}`)
+          .then((response) => {
+          userData=response.data;
+          console.log(userData);
+           if(userData.role==="admin"){
+           navigate('/weightLogs/admin');
+           } else {
+            navigate(`/weightLogs/${userData.userId}`);
+           }
+          })
+          .catch((err)=>{
+            
+            alert('Enter correct values');
+        })
+        }
+       submit();
+    }
+    return (
+        <div>
+<Form>
+        <FormGroup>
+          <Label for="userId">User Identification</Label>
+          <Input type="text" name="userId" id="userId" placeholder="Enter user Identification" onChange={handleChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Password</Label>
+          <Input type="password" name="password" id="password" placeholder="Enter the password"  onChange={handleChange}/>
+        </FormGroup>
+        <Button onClick={handleSubmit}>Log in</Button>
+        </Form>
+        </div>
+      );
 }
  
 export default Login;

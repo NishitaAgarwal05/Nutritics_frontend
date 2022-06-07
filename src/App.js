@@ -26,30 +26,16 @@ import Payments from './containers/paymentModule/Payments';
 import AddPaymentOffer from './containers/paymentModule/AddOffer';
 import AddPayment from './containers/paymentModule/AddPayment';
 import UpdatePayment from './containers/paymentModule/UpdatePayment';
-import Login from './containers/Login';
 import WeightLogListById from './containers/weightLog/WeightLogListById';
 
-import LoginUser from "./containers/userModule/Login";
+import Login from "./containers/userModule/Login";
 import UserList from './containers/userModule/UserList';
 import RegisterUser from './containers/userModule/RegisterUser';
 import UpdateUser from './containers/userModule/UpdateUser';
 
 function App() {
-  const roles={
-    ADMIN: "ADMIN",
-    USER: "USER",
-  };
-  const permissions={
-    EDIT_PLAN: "EDIT_PLAN",
-  }
-  const rules={
-    [roles.ADMIN]:{
-      [permissions.EDIT_PLAN]: true
-    },
-  };
   return (
     <div className="App">
-      <AbacProvider rules={rules} /*user=*/>
         <Router>
         <NavBar />
         <Routes>
@@ -92,7 +78,6 @@ function App() {
       
         <Footer />
         </Router>
-      </AbacProvider>
     </div>
   );
 }
