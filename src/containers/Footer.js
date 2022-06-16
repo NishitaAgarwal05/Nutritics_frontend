@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <div>
-      <footer className="page-footer font-small blue pt-4">
-        <div className="container-fluid text-center text-md-left">
+      <footer className="page-footer font-small pt-4" >
+        <div className="container-fluid text-center text-md-left ">
           <div className="row">
             <div className="col-md-6 mt-md-0 mt-3">
               <h5 className="text-uppercase">Nutrition App</h5>
@@ -49,7 +49,8 @@ const Footer = () => {
         </div>
       </footer>
     </div>
+   
   );
-};
+}
 
 export default Footer;

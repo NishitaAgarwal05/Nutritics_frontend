@@ -28,12 +28,13 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const validateUser = () => {
     dispatch(authenticateUser(email, password))
       .then((response) => {
         console.log(response.data);
-        return props.history.push("/home");
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error.message);
