@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import './../../src/Home.css';
-import NewsLetterForm from "./NewsLetterForm";
 class Home extends Component {
   state = {};
   render(){
@@ -19,7 +18,6 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <NewsLetterForm />
       </div>
         
     );

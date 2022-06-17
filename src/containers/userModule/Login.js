@@ -33,7 +33,6 @@ const Login = (props) => {
   const validateUser = () => {
     dispatch(authenticateUser(email, password))
       .then((response) => {
-        console.log(response.data);
         navigate("/home");
       })
       .catch((error) => {

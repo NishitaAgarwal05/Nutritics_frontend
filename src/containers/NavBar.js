@@ -28,7 +28,7 @@ const NavBar = () => {
         <Link to={"/nutritionPlan"} className="nav-link">
           Nutrition Plans
         </Link>
-        <Link to={"/weightLogs"} className="nav-link">
+        {/* <Link to={"/weightLogs"} className="nav-link">
           Weight Logs
         </Link>
         <Link to={"/dietPlan"} className="nav-link">
@@ -39,10 +39,10 @@ const NavBar = () => {
         </Link>
         <Link to={"/user"} className="nav-link">
           User
-        </Link>
+        </Link> */}
       </Nav>
       <Nav className="navbar-right">
-        <Link to={"/home"} className="nav-link" onClick={logout}>
+        <Link to={"/login"} className="nav-link" onClick={logout}>
           <FaSignOutAlt></FaSignOutAlt> Logout
         </Link>
       </Nav>

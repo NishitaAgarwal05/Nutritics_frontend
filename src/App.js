@@ -10,11 +10,9 @@ import NavBar from './containers/NavBar';
 import { Navigate } from 'react-router';
 import PlanDetails from './containers/nutritionPlan/PlanDetails';
 import Footer from './containers/Footer';
-import NewsLetterForm from './containers/NewsLetterForm';
 import AddWeightLog from './containers/weightLog/AddWeightLog';
 import WeightLogList from'./containers/weightLog/WeightlogList';
 import EditWeightLog from'./containers/weightLog/EditWeightLog';
-import Contact from './containers/Contact';
 import AddNutritionPlan from './containers/nutritionPlan/AddPlan';
 
 import AddDietPlan from "./containers/dietPlan/AddPlan";
@@ -71,7 +69,6 @@ function App() {
           <Route path = "/registerUser" element = {<RegisterUser/>} />
           <Route path = "/updateUser:id" element = {<UpdateUser/>} />
 
-          <Route path="/contact" element={<Contact/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="*" element={<NotFound />} />
         </Routes>

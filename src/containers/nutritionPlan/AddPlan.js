@@ -58,7 +58,11 @@ class AddPlan extends Component {
         if (this.state.errors) return;
         
         // Send post request to rest api
-        axios.post("https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/createPlan", this.state.plan)
+        axios.post("https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/createPlan", this.state.plan,{
+          headers:{
+            "Authorization": localStorage.jwtToken
+          }
+        })
         .then((res) => {
             console.log(res.data)
             alert("Plan added successfully!"); 

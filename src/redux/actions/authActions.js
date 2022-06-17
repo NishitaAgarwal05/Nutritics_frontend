@@ -12,6 +12,7 @@ export const authenticateUser = (email, password) => async (dispatch) => {
       password: password,
     });
     localStorage.setItem("jwtToken", response.data.token);
+    localStorage.setItem("role",response.data.authorities);
     dispatch(success({ username: response.data.name, isLoggedIn: true }));
     return Promise.resolve(response.data);
   } catch (error) {
@@ -24,8 +25,8 @@ export const logoutUser = () => {
   return (dispatch) => {
     dispatch(logoutRequest());
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("role");
     dispatch(success({ username: "", isLoggedIn: false }));
-    
   };
 };
 

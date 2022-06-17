@@ -22,7 +22,11 @@ const UpdatePlan = () => {
   // send get request
   useEffect(() => {
     axios
-      .get(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/getPlan/${params.planId}`)
+      .get(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/getPlan/${params.planId}`,{
+        headers:{
+          "Authorization": localStorage.jwtToken
+        }
+      })
       .then((res) => {
         //console.log(res);
         setPlan((plan) => ({
@@ -50,7 +54,12 @@ const UpdatePlan = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/changePlan/${params.planId}`, plan)
+      .put(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/changePlan/${params.planId}`, {plan},
+      {
+        headers:{
+          "Authorization":localStorage.jwtToken
+        }
+      })
       .then((res) => {
         console.log(res);
         alert("Updated plan " + params.planId + " successfully!!");

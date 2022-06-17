@@ -23,7 +23,11 @@ class NutritionPlan extends Component {
   handleDelete = (id) => {
     console.log(id);
     axios
-      .delete(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/removePlan/${id}`)
+      .delete(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/removePlan/${id}`,{
+        headers:{
+          "Authorization": localStorage.jwtToken
+        }
+      })
       .then((response) => {
         window.location.reload(false);
         console.log(response);
@@ -32,13 +36,16 @@ class NutritionPlan extends Component {
         console.log(error);
       });
   };
+
   render() {
     // console.log(this.state.plans);
     return (
       <div className="w-75 mx-auto mt-3" style={{height: "100vh"}}>
       <Link 
       to="/nutrionPlan/add"
-      type="button" className="btn  float-end" style={{backgroundColor:"#f3a82f" ,color:"white"}}>
+      type="button" className="btn  float-end"
+      disabled={localStorage.role == "ROLE_USER"} 
+      style={{backgroundColor:"#f3a82f" ,color:"white"}}>
       Add Plan
       </Link>
   <table className="table table-striped">
@@ -56,6 +63,7 @@ class NutritionPlan extends Component {
           <td>{plan.planDescription}</td>
           <td>{plan.price}</td>
           <td>
+          
           <Link  to={`/nutritionPlan/update/${plan.id}`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FiEdit2></FiEdit2></Button>
           </Link>

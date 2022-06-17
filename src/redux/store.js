@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 
 import reducers from "./reducers/index";
 
-
 const initialState = {};
 const middleware = [thunk];
 const store = createStore(
@@ -12,5 +11,6 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
 export default store;
 
