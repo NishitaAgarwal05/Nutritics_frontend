@@ -54,7 +54,7 @@ const UpdatePlan = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/changePlan/${params.planId}`, {plan},
+      .put(`https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/changePlan/${params.planId}`, plan,
       {
         headers:{
           "Authorization":localStorage.jwtToken

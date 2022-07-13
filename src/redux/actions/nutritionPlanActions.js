@@ -64,15 +64,15 @@ export const getPlanByIdAction = (id) => async (dispatch) => {
     });
   };
   
-  export const updatePlanAction = (plan) => async (dispatch) => {
-    const result = await axios.put("https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/updatePlan",{ plan},
+  export const updatePlanAction = (plan,id) => async (dispatch) => {
+    const result = await axios.put("https://nutritrics-backend.herokuapp.com/api/v1/nutritionPlan/changePlan/"+id,{plan},
     {
       headers:{
         'Authorization': localStorage.jwtToken
       }
     });
-    console.log(result);
     console.log(result.data);
+
     dispatch({
       type: "UPDATE_PLAN",
       payload: result.data,
