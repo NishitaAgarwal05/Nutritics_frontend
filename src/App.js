@@ -29,7 +29,8 @@ import WeightLogListById from './containers/weightLog/WeightLogListById';
 import Login from "./containers/userModule/Login";
 import UserList from './containers/userModule/UserList';
 import RegisterUser from './containers/userModule/RegisterUser';
-import UpdateUser from './containers/userModule/UpdateUser';
+import ProfileUpdate from './containers/userModule/ProfileUpdate';
+import ChangePassword from './containers/userModule/ChangePassword';
 
 function App() {
   return (
@@ -67,7 +68,8 @@ function App() {
           {/* <Route path="/Login" element = {<LoginUser/>} /> */}
           <Route path="/userlist" element = {<UserList/>} />
           <Route path = "/registerUser" element = {<RegisterUser/>} />
-          <Route path = "/updateUser:id" element = {<UpdateUser/>} />
+          <Route path = "/profileUpdate" element = {<ProfileUpdate/>} />
+          <Route path = "/changePassword" element = {<ChangePassword/>} />
 
           <Route path="/login" element={<Login/>}/>
           <Route path="*" element={<NotFound />} />

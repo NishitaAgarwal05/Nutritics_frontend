@@ -41,13 +41,16 @@ class NutritionPlan extends Component {
     // console.log(this.state.plans);
     return (
       <div className="w-75 mx-auto mt-3" style={{height: "100vh"}}>
-      <Link 
-      to="/nutrionPlan/add"
-      type="button" className="btn  float-end"
-      disabled={localStorage.role == "ROLE_USER"} 
-      style={{backgroundColor:"#f3a82f" ,color:"white"}}>
-      Add Plan
-      </Link>
+      {
+        localStorage.role[0]==='A'?
+        <Link 
+        to="/nutrionPlan/add"
+        type="button" className="btn  float-end"
+        disabled={localStorage.role == "ROLE_USER"} 
+        style={{backgroundColor:"#f3a82f" ,color:"white"}}>
+        Add Plan
+        </Link> :null
+    }
   <table className="table table-striped">
     <thead>
       <tr>
@@ -63,19 +66,25 @@ class NutritionPlan extends Component {
           <td>{plan.planDescription}</td>
           <td>{plan.price}</td>
           <td>
-          
-          <Link  to={`/nutritionPlan/update/${plan.id}`}>
-            <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FiEdit2></FiEdit2></Button>
-          </Link>
-          <Button style={{ margin: '.25rem' }} outline color="danger" size="sm" onClick={()=>this.handleDelete(plan.id)}><RiDeleteBinLine></RiDeleteBinLine></Button>
+          { 
+            localStorage.role[0]=='A'?  
+            <Link  to={`/nutritionPlan/update/${plan.id}`}>
+              <Button style={{ margin: '.25rem'}}  outline color="primary" size="sm"><FiEdit2></FiEdit2></Button>
+            </Link>
+            :null}
+          { 
+            localStorage.role[0]=='A'?  
+            <Button style={{ margin: '.25rem' }} disabled={localStorage.role[0]=='U'} outline color="danger" size="sm" onClick={()=>this.handleDelete(plan.id)}><RiDeleteBinLine></RiDeleteBinLine></Button>
+            : null
+          }
           <Link  to={`/nutritionPlan/details/${plan.id}`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FcInfo></FcInfo></Button>
           </Link>
           </td>
           <td>
-          <Link  to={`/payment/add`}>
+          {/* <Link  to={`/payment/add`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm">Pay Now</Button>
-          </Link>
+          </Link> */}
           </td>
         </tr>
       ))}

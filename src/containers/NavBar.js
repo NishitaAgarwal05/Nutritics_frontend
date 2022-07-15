@@ -3,17 +3,19 @@ import image from "../images/final.png";
 import { Link, useNavigate } from "react-router-dom";
 import {Navbar, Nav, NavDropdown,Container} from "react-bootstrap";
 import {AiOutlineUserAdd} from "react-icons/ai";
-import {RiLoginBoxLine} from "react-icons/ri";
-import {FaSignOutAlt} from "react-icons/fa";
+import {RiLoginBoxLine, RiLockPasswordFill} from "react-icons/ri";
+import {FaSignOutAlt, FaUserAlt, FaEdit} from "react-icons/fa";
 import {useSelector,useDispatch} from "react-redux";
 import {logoutUser} from "../redux/actions/authActions";
+
 
 const NavBar = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const logout = () => {
     dispatch(logoutUser());
+    navigate("/login");
   };
 
   const guestLinks = (
@@ -23,7 +25,7 @@ const NavBar = () => {
       </Nav>
   );
   const userLinks = (
-    <>
+    <div>
       <Nav className="mr-auto">
         <Link to={"/nutritionPlan"} className="nav-link">
           Nutrition Plans
@@ -36,22 +38,30 @@ const NavBar = () => {
         </Link>
         <Link to={"/payments"} className="nav-link">
           Payments
-        </Link>
-        <Link to={"/user"} className="nav-link">
-          User
-        </Link> */}
+        </Link>*/}
+        { localStorage.length ===0?null:
+          localStorage.role[0]==='A' ?
+          <Link to={"/userlist"} className="nav-link">
+            Users List
+          </Link> : <div></div>
+        }
       </Nav>
-      <Nav className="navbar-right">
-        <Link to={"/login"} className="nav-link" onClick={logout}>
-          <FaSignOutAlt></FaSignOutAlt> Logout
-        </Link>
+    </div>
+  );
+  const ProfileLinks = (
+    <>
+    <Nav>
+        <NavDropdown align="end" id="nav-dark-example mr-5" menuVariant="dark" title={<FaUserAlt></FaUserAlt>}>
+          <NavDropdown.Item href="/profileUpdate"><FaEdit></FaEdit>Edit Profile</NavDropdown.Item>
+          <NavDropdown.Item href="/changePassword"><RiLockPasswordFill></RiLockPasswordFill>Change Password</NavDropdown.Item> 
+          <NavDropdown.Item href="#" onClick={logout}><FaSignOutAlt></FaSignOutAlt>Logout</NavDropdown.Item>
+        </NavDropdown>
       </Nav>
     </>
-  );
-
+);
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Link to={auth.isLoggedIn ? "home" : ""} className="navbar-brand">
+      <Link to="/home" className="navbar-brand">
       <img
         src={image}
         width="50"
@@ -62,10 +72,14 @@ const NavBar = () => {
     </Link>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
-    {auth.isLoggedIn ? userLinks : guestLinks}
+      <Navbar.Collapse id="responsive-navbar-nav">
+        {auth.isLoggedIn ? userLinks: null}
+      </Navbar.Collapse>
+      {auth.isLoggedIn ? ProfileLinks : guestLinks}
     </Navbar.Collapse>
     
   </Navbar>
+  
   );
 };
 export default NavBar;

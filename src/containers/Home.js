@@ -13,7 +13,7 @@ class Home extends Component {
               <h3 className="sub-title">The foundational guide to balancing your nutritional diets and everyday lifestyle</h3>
               <div className="know-more-button">
                <p className="know-more-text">
-                 <a href="/contact" style={{textDecoration:"none",color:"black"}}>KNOW MORE</a></p>
+                 <a href="#" style={{textDecoration:"none",color:"black"}}>KNOW MORE</a></p>
              </div>  
             </div>
           </div>

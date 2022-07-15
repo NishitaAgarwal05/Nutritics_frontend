@@ -29,6 +29,7 @@ const RegisterUser = (props) => {
     email: "",
     password: "",
     mobile: "",
+    status: "active"
   };
 
   const [user, setUser] = useState(initialState);

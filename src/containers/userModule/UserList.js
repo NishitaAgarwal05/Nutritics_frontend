@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import UpdateUser from './UpdateUser';
+import {ImBlocked} from "react-icons/im";
+import {FiActivity} from "react-icons/fi"
 class UserList extends Component {
 state = { 
-          
-          userlist:[]
-
+      userlist:[]
      }
-
      componentDidMount() {
         console.log("componentDidMount");
         axios
-          .get("https://nutritrics-backend.herokuapp.com/api/v1/user/listUsers")
+          .get("https://nutritrics-backend.herokuapp.com/api/v1/user/listUsers",{
+            headers:{
+              "Authorization": localStorage.jwtToken
+            }
+          })
           .then((response) => {
             console.log(response);
             this.setState({ userlist: response.data });
@@ -21,75 +23,52 @@ state = {
             console.log(error);
           });
       }
-
+      handleClick = (id) =>{
+        let data={};
+        axios.put(`https://nutritrics-backend.herokuapp.com/api/v1/user/activateOrBlockUser/${id}`,data,{
+          headers:{
+            "Authorization": localStorage.jwtToken
+          }
+      })
+        .then((res) => {
+            console.log(res.data)
+            alert("Status updated successfully!"); 
+            window. location. reload(false);
+            // this.props.navigate("/nutritionPlan")
+        })
+        .catch((err) => {console.log(err)});
+    };
     render() { 
         return (
+          <div className="w-75 mx-auto mt-3" style={{height: "100vh"}}>
             <table className="table table-striped">
-            <thead>
-              <tr>
-                {/* <th>Id</th> */}
-                <th>userId</th>
-                <th>name</th>
-                <th>contact</th>
-                <th>gender</th>
-                <th>D.O.B</th>
-                <th>photo</th>
-                <th>email</th>
-                <th>role</th>
-                <th>status</th>
-                <th>weight</th>
-                <th>height</th>
-                <th>intensity</th>
-                <th>goal</th>
-                <th>workOutTime</th>
-                <th>wakeUpTime</th>
-                <th>sleepTIme</th>
-                <th>medicalCondition</th>
-                <th>allergicTo</th>
-                <th>loginName</th>
-                <th>diateryOrientation</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.userlist.map((p) => (
-                <tr key={p.id}>
-                {/* <td>{p.id}</td> */}
-                  <td>{p.userIdentification}</td>
-                  <td>{p.name}</td>
-                  <td>{p.contact}</td>
-                  <td>{p.gender}</td>
-                  <td>{p.dob}</td>
-                  <td>{p.photo}</td>
-                  <td>{p.email}</td>
-                  <td>{p.role}</td>
-                  <td>{p.status}</td>
-                  <td>{p.weight}</td>
-                  <td>{p.height}</td>
-                  <td>{p.intensity}</td>
-                  <td>{p.goal}</td>
-                  <td>{p.workOutTime}</td>
-                  <td>{p.wakeUpTime}</td>
-                  <td>{p.sleepTime}</td>
-                  <td>{p.medicalCondition}</td>
-                  <td>{p.allergicTo}</td>
-                  <td>{p.loginName}</td>
-                  <td>{p.diateryOrientation}</td>
-                  <td>
-                    <Link to={`/updateUser${p.id}`}>
-                      <button type="button" class="btn btn-primary">Update User</button>   
-                    </Link>
-
-                    <Link to={`/removeUser${p.id}`}>
-                      <button type="button" class="btn btn-danger">Delete User</button>   
-                    </Link>
-                   
-                  </td>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>name</th>
+                  <th>email</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-
+              </thead>
+              <tbody>
+                {this.state.userlist.map((u) => (
+                  <tr key={u.id}>
+                  <td>{u.userId}</td>
+                  <td>{u.name}</td>
+                  <td>{u.email}</td>
+                    <td>
+                      {
+                        u.status.toLowerCase()==="active"?
+                        <button style={{ margin: '.25rem'}} type="button" className="btn btn-outline-success" size="sm" onClick={this.handleClick.bind(this,u.userId)}><FiActivity></FiActivity></button>
+                        :
+                        <button style={{ margin: '.25rem'}}  type="button" className="btn btn-outline-secondary" onClick={this.handleClick.bind(this,u.userId)}><ImBlocked></ImBlocked></button>                      
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           );
     }
 }
