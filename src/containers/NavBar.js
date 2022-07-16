@@ -32,13 +32,13 @@ const NavBar = () => {
         </Link>
         {/* <Link to={"/weightLogs"} className="nav-link">
           Weight Logs
-        </Link>
+        </Link> */}
         <Link to={"/dietPlan"} className="nav-link">
           Diet Plans
         </Link>
-        <Link to={"/payments"} className="nav-link">
+        {/* <Link to={"/payments"} className="nav-link">
           Payments
-        </Link>*/}
+        </Link> */}
         { localStorage.length ===0?null:
           localStorage.role[0]==='A' ?
           <Link to={"/userlist"} className="nav-link">
@@ -73,9 +73,9 @@ const NavBar = () => {
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Navbar.Collapse id="responsive-navbar-nav">
-        {auth.isLoggedIn ? userLinks: null}
+        {localStorage.isLoggedIn ? userLinks: null}
       </Navbar.Collapse>
-      {auth.isLoggedIn ? ProfileLinks : guestLinks}
+      {localStorage.isLoggedIn ? ProfileLinks : guestLinks}
     </Navbar.Collapse>
     
   </Navbar>

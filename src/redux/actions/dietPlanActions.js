@@ -1,8 +1,11 @@
 import axios from "axios";
 //actions to get all products
 export const getAllPlansAction = ()=> async(dispatch) =>{
-    const response = await axios.get("https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/listAllPlans");
-    console.log(response.data);
+    const response = await axios.get("https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/listAllPlans",{
+      headers:{
+        "Authorization":localStorage.jwtToken
+      }
+    });
     dispatch({
         type: "GET_PLANS",
         payload: response.data,
@@ -11,9 +14,12 @@ export const getAllPlansAction = ()=> async(dispatch) =>{
 
 // Get plan by id action
 export const getPlanByIdAction = (id) => async (dispatch) => {
-    const result = await axios.get("https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/getDietPlan/" + id);
-    console.log(result);
-    console.log(result.data);
+    const result = await axios.get("https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/getPlan/" + id,
+    {
+      headers:{
+        "Authorization": localStorage.jwtToken
+      }
+    });
     dispatch({
       type: "GET_PLAN",
       payload: result.data,
@@ -21,7 +27,11 @@ export const getPlanByIdAction = (id) => async (dispatch) => {
   };
 
   export const addPlanAction = (plan) => async (dispatch) => {
-    const result = await axios.post("https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/createDietPlan", plan);
+    const result = await axios.post("https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/createDietPlan", plan,{
+      headers:{
+        "Authorization": localStorage.jwtToken
+      }
+    });
     console.log(result);
     console.log(result.data);
     dispatch({

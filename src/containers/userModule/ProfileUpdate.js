@@ -77,7 +77,7 @@ const ProfileUpdate = () => {
           })
           .then((res) => {
             alert("Updated user " + user.id + " successfully!!");
-            // navigate("/nutritionPlan");
+            navigate("/home");
           })
           .catch((err) => {
             console.log(err);

@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import {  useParams } from "react-router-dom";
+import {  useParams,useNavigate  } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-const UpdatePlan = () => {
+const UpdateDietPlan = () => {
   // initialize component state
   const [plan, setPlan] = useState({
     id:"",
@@ -16,14 +17,19 @@ const UpdatePlan = () => {
 
   // get plan id from url
   const params = useParams();
+  const dispatch = useDispatch();
   console.log(params);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // send get request
   useEffect(() => {
     axios
-      .get(`https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/getDietPlan/${params.planId}`)
+      .get(`https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/getPlan/${params.planId}`,{
+        headers:{
+          "Authorization": localStorage.jwtToken
+        }
+      })
       .then((res) => {
         console.log(res);
         setPlan((plan) => ({
@@ -52,11 +58,15 @@ const UpdatePlan = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/changeDietPlan/${params.planId}`, plan)
+      .put(`https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/changeDietPlan/${params.planId}`, plan,{
+        headers:{
+          "Authorization":localStorage.jwtToken
+        }
+      })
       .then((res) => {
         console.log(res);
-        alert("Updated plan " + params.planId + " successfully!!");
-        // navigate("/dietPlan");
+        alert("Updated Diet plan " + params.planId + " successfully!!");
+        navigate("/dietPlan");
       })
       .catch((err) => {
         console.log(err);
@@ -74,9 +84,9 @@ const UpdatePlan = () => {
                   class="form-control" 
                   id = "slots" 
                   placeholder="Enter Diet Plan Slot" 
-                  value={this.state.slots}
+                  value={plan.slots}
                   name ="slots"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   />
               </div>
               <div className="mb-3">
@@ -86,9 +96,9 @@ const UpdatePlan = () => {
                   class="form-control" 
                   id = "foodType" 
                   placeholder="Enter Food Type" 
-                  value={this.state.foodType}
+                  value={plan.foodType}
                   name ="foodType"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                   />
               </div>
               <div className="mb-3">
@@ -99,9 +109,9 @@ const UpdatePlan = () => {
                   class="form-control" 
                   id = "proteinRatio" 
                   placeholder="Enter the Protein Ratio" 
-                  value={this.state.proteinRatio}
+                  value={plan.proteinRatio}
                   name ="proteinRatio"
-                  onChange={this.handleChange}/>
+                  onChange={handleChange}/>
               </div>
               <div className="mb-3">
                 <label htmlFor="fatRatio" className="form-label float-start">Fat Ratio:</label>
@@ -111,9 +121,9 @@ const UpdatePlan = () => {
                   class="form-control" 
                   id = "fatRatio" 
                   placeholder="Enter the Fat Ratio" 
-                  value={this.state.fatRatio}
+                  value={plan.fatRatio}
                   name ="fatRatio"
-                  onChange={this.handleChange}/>
+                  onChange={handleChange}/>
               </div>
               <div className="mb-3">
                 <label htmlFor="carbsRatio" className="form-label float-start">Carbs Ratio:</label>
@@ -123,9 +133,9 @@ const UpdatePlan = () => {
                   class="form-control" 
                   id = "carbsRatio" 
                   placeholder="Enter the Carbs Ratio" 
-                  value={this.state.carbsRatio}
+                  value={plan.carbsRatio}
                   name ="fatRatio"
-                  onChange={this.handleChange}/>
+                  onChange={handleChange}/>
               </div>
               <div className="mb-3">
                 <label htmlFor="total" className="form-label float-start">Total calories:</label>
@@ -135,18 +145,18 @@ const UpdatePlan = () => {
                   class="form-control" 
                   id = "total" 
                   placeholder="Enter the Total calories" 
-                  value={this.state.total}
-                  name ="fatRatio"
-                  onChange={this.handleChange}/>
+                  value={plan.total}
+                  name ="total"
+                  onChange={handleChange}/>
               </div>
                 <div class="d-grid gap-2">
                   <button type="Submit" className="btn btn-primary " >
-                  Submit
-                  </button>
+                  Update
+                  </button><br></br>
                  </div>
               </form>
           </div>
   );
 };
 
-export default UpdatePlan;
+export default UpdateDietPlan;

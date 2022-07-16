@@ -13,12 +13,14 @@ import {
     Alert,
   } from "react-bootstrap";
 import { Component } from "react";
+import { useNavigate } from "react-router-dom";
 const ChangePassword = (props) => {
     const [error, setError] = useState();
     const [show, setShow] = useState(true);
     const [id,setId] = useState();
     const [oldPassword,setOldPassword] = useState("");
     const [newPassword,setNewPassword] = useState("");
+    const navigate=useNavigate();
     useEffect(() => {
         axios
           .get(`https://nutritrics-backend.herokuapp.com/api/v1/user/getUser/${localStorage.email}`,{
@@ -44,7 +46,7 @@ const ChangePassword = (props) => {
           })
           .then((res) => {
             alert("Password changed successfully!!");
-            // navigate("/nutritionPlan");
+            navigate("/home");
           })
           .catch((err) => {
             setShow(true);

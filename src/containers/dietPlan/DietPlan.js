@@ -20,27 +20,32 @@ class DietPlan extends Component {
       this.setState({ plans: this.props.plans });
     }, 2000);
   }
-  handleDelete = (id) => {
+  handleDelete = (id,plan) => {
     console.log(id);
     axios
-      .delete(`https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/removeDietPlan/${id}`)
+      .delete(`https://nutritrics-backend.herokuapp.com/api/v1/dietPlan/removeDietPlan/${id}`,{
+        headers:{
+          "Authorization":localStorage.jwtToken
+        }
+      })
       .then((response) => {
         window.location.reload(false);
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
   };
   render() {
-    console.log(this.state.plans);
     return (
       <div className="w-75 mx-auto mt-3" style={{minHeight:"100vh"}}>
-      <Link 
-      to="/dietPlan/add"
-      type="button" className="btn  float-end" style={{backgroundColor:"#f3a82f" ,color:"white"}}>
-      Add Plan
-      </Link>
+      {
+        localStorage.role[0]==='A'?
+        <Link 
+          to="/dietPlan/add"
+          type="button" className="btn  float-end" style={{backgroundColor:"#f3a82f" ,color:"white"}}>
+          Add Plan
+        </Link>:null
+      }
   <table className="table table-striped">
     <thead>
       <tr>
@@ -56,18 +61,25 @@ class DietPlan extends Component {
           <td>{plan.foodType}</td>
           <td>{plan.total}</td>
           <td>
-          <Link  to={`/dietPlan/update/${plan.id}`}>
-            <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FiEdit2></FiEdit2></Button>
-          </Link>
-          <Button style={{ margin: '.25rem' }} outline color="danger" size="sm" onClick={()=>this.handleDelete(plan.id)}><RiDeleteBinLine></RiDeleteBinLine></Button>
+          { 
+            localStorage.role[0]=='A'? 
+            <Link  to={`/dietPlan/update/${plan.id}`}>
+              <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FiEdit2></FiEdit2></Button>
+            </Link>:null
+          }
+          { 
+            localStorage.role[0]=='A'? 
+            <Button style={{ margin: '.25rem' }} outline color="danger" size="sm" onClick={this.handleDelete.bind(this,plan.id,plan)}><RiDeleteBinLine></RiDeleteBinLine></Button>
+            :null
+          }
           <Link  to={`/dietPlan/details/${plan.id}`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FcInfo></FcInfo></Button>
           </Link>
           </td>
           <td>
-          <Link  to={`/payment/add`}>
+          {/* <Link  to={`/payment/add`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm">Pay Now</Button>
-          </Link>
+          </Link> */}
           </td>
         </tr>
       ))}

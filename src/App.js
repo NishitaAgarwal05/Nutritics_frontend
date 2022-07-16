@@ -15,10 +15,10 @@ import WeightLogList from'./containers/weightLog/WeightlogList';
 import EditWeightLog from'./containers/weightLog/EditWeightLog';
 import AddNutritionPlan from './containers/nutritionPlan/AddPlan';
 
-import AddDietPlan from "./containers/dietPlan/AddPlan";
+import AddPlan from "./containers/dietPlan/AddPlan";
 import DietPlan from "./containers/dietPlan/DietPlan";
 import DietPlanDetails from "./containers/dietPlan/PlanDetails";
-import UpdateDietPlan from './containers/nutritionPlan/UpdatePlan';
+import UpdateDietPlan from './containers/dietPlan/UpdateDietPlan';
 
 import Payments from './containers/paymentModule/Payments';
 import AddPaymentOffer from './containers/paymentModule/AddOffer';
@@ -56,7 +56,7 @@ function App() {
 
           <Route path="/dietPlan" element={<DietPlan />} />
           <Route path="/dietPlan/details/:id" element={<DietPlanDetails />} />
-          <Route path="/dietPlan/add" element={<AddDietPlan />} />
+          <Route path="/dietPlan/add" element={<AddPlan />} />
           <Route path="/dietPlan/update/:planId" element={<UpdateDietPlan />} />
 
           
