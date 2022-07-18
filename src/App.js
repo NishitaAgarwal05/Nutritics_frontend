@@ -11,7 +11,7 @@ import { Navigate } from 'react-router';
 import PlanDetails from './containers/nutritionPlan/PlanDetails';
 import Footer from './containers/Footer';
 import AddWeightLog from './containers/weightLog/AddWeightLog';
-import WeightLogList from'./containers/weightLog/WeightlogList';
+import IWeightLog from './containers/weightLog/IWeightLog';
 import EditWeightLog from'./containers/weightLog/EditWeightLog';
 import AddNutritionPlan from './containers/nutritionPlan/AddPlan';
 
@@ -24,7 +24,6 @@ import Payments from './containers/paymentModule/Payments';
 import AddPaymentOffer from './containers/paymentModule/AddOffer';
 import AddPayment from './containers/paymentModule/AddPayment';
 import UpdatePayment from './containers/paymentModule/UpdatePayment';
-import WeightLogListById from './containers/weightLog/WeightLogListById';
 
 import Login from "./containers/userModule/Login";
 import UserList from './containers/userModule/UserList';
@@ -49,10 +48,8 @@ function App() {
 
 
           <Route path="/weightLog/add" element={<AddWeightLog/>}/>
-          <Route path="/weightLogs/admin" element={<WeightLogList/>}/>
+          <Route path="/weightLogs" element={<IWeightLog/>}/>
           <Route path="/weightLog/update/:id" element={<EditWeightLog/>}/>
-          <Route path="/weightLogs/:id" element={<WeightLogListById />}/>
-          <Route path="/weightLogs" element={<Login/>}/>
 
           <Route path="/dietPlan" element={<DietPlan />} />
           <Route path="/dietPlan/details/:id" element={<DietPlanDetails />} />

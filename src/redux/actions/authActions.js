@@ -30,6 +30,7 @@ export const logoutUser = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("email");
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
     dispatch(success({ username: "", isLoggedIn: false }));
   };
 };

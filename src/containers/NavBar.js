@@ -30,21 +30,21 @@ const NavBar = () => {
         <Link to={"/nutritionPlan"} className="nav-link">
           Nutrition Plans
         </Link>
-        {/* <Link to={"/weightLogs"} className="nav-link">
+        <Link to={"/weightLogs"} className="nav-link">
           Weight Logs
-        </Link> */}
+        </Link>
         <Link to={"/dietPlan"} className="nav-link">
           Diet Plans
         </Link>
         {/* <Link to={"/payments"} className="nav-link">
           Payments
         </Link> */}
-        { localStorage.length ===0?null:
+        {/* { localStorage.length ===0?null:
           localStorage.role[0]==='A' ?
           <Link to={"/userlist"} className="nav-link">
             Users List
           </Link> : <div></div>
-        }
+        } */}
       </Nav>
     </div>
   );

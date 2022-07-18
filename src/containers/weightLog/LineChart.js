@@ -4,7 +4,19 @@ import { Chart as ChartJS} from "chart.js/auto";
 const LineChart = ({charData}) => {
    
     return ( 
-        <Line data={charData} />
+        <Line data={charData} options={{
+            scales: {
+                y: {
+                    min: 20,
+                    max: 200,
+                    ticks: {
+                        // forces step size to be 50 units
+                        stepSize: 10
+                      }
+                }
+            }
+        }
+        }/>
      );
 }
  

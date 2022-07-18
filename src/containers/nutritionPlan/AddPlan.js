@@ -80,7 +80,7 @@ class AddPlan extends Component {
               <label htmlFor="name" className="form-label float-start">Name:</label>
               <input 
                 type="text" 
-                class="form-control" 
+                className="form-control" 
                 id = "name" 
                 placeholder="Enter Nutrition Plan name" 
                 value={this.state.name}
@@ -93,7 +93,7 @@ class AddPlan extends Component {
               <label htmlFor="planDescription" className="form-label float-start">Plan Description:</label>
               <input 
                 type="text" 
-                class="form-control" 
+                className="form-control" 
                 id = "planDescription" 
                 placeholder="Enter Nutrition Plan Description" 
                 value={this.state.planDescription}
@@ -106,7 +106,7 @@ class AddPlan extends Component {
               <label htmlFor="createdOn" className="form-label float-start">Created On:</label>
               <input 
                 type="date" 
-                class="form-control" 
+                className="form-control" 
                 id = "CreatedOn" 
                 placeholder="Enter date on which nutrition plan was created" 
                 value={this.state.created_At}
@@ -118,7 +118,7 @@ class AddPlan extends Component {
               <label htmlFor="title" className="form-label float-start">Updated On:</label>
               <input 
                 type="date"  
-                class="form-control" 
+                className="form-control" 
                 id="updatedOn" 
                 placeholder="Enter date on which nutrition plan was updated" 
                 value={this.state.updated_At}
@@ -131,7 +131,7 @@ class AddPlan extends Component {
               <input 
                 type="number" 
                 step ="any"
-                class="form-control" 
+                className="form-control" 
                 id="body"  
                 placeholder="Enter price of Nutrition plan" 
                 value={this.state.price}

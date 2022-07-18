@@ -1,223 +1,113 @@
-import React,{ Component, useState}  from "react";
-import { connect, useDispatch } from "react-redux";
-import { createWeightLog } from "../../redux/actions/weightLogActions";
-import moment from 'moment';
-import '../../style.css';
-
+import React,{ useEffect, useState}  from "react";
+import {  useParams, useNavigate } from "react-router-dom";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import axios from "axios";
-import { useNavigate , useLocation} from "react-router-dom";
+import moment from "moment";
 
 var DatePicker = require("reactstrap-date-picker");
 
-class AddWeightLog extends Component {
+const AddWeightLog= () => {
 
-    constructor(props){
-        super(props);
-        this.handleChangeWeight=this.handleChangeWeight.bind(this);
-        this.handleChangeDate1=this.handleChangeDate1.bind(this);
-        this.handleChangeDate2=this.handleChangeDate2.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
-        this.state={
-            
+    const[weightLog,setWeightLog]=useState({
             id:"",
-        weight:"",
-        createdAt:"",
-        updatedAt:"",
-        user:{
-            userId:"",
-            userIdentification:"ABCD",
-        name:"Muskan",
-       contact:"9518789095",
-       gender:"F",
-       dob:"29-08-200",
-       photo:"photo",
-       email:"email",
-       role:"role",
-       status:"active",
-       weight:60,
-       height:5.6,
-       intensity:12,
-       goal:"goal",
-       workOutTime:"32",
-       wakeUpTime:"8:00",
-       sleepTime:"9:00",
-       medicalCondition:"good",
-       allergicTo:"non",
-       loginName:"ap",
-       password:"123",
-       diateryOrientation:123
-        },
-    submitted:false,
-}
-}
-   componentDidMount(){
-       console.log(this.windows)
-   }
-    handleChangeWeight=(e)=>{
-        this.setState({
-                
-               weight:e.target.value
-    });
-
-    }
-
-    handleChangeDate1=(e)=>{
-        this.setState({
-                
-               createdAt:e.target.value
-    });
-
-    }
-
-    handleChangeDate2=(e)=>{
-        this.setState({
-                
-               updatedAt:e.target.value
-    });
-
-    }
-
-    handleChangeUser=(e)=>{
-        this.setState({
-            user:{
-                userId:e.target.value
-            }
-            
-        })
-    }
-
-
-    async handleSubmit(){
-        let id=this.props.userId!=""?this.props.userId:this.state.user.userId;
-        let user={};
-        await axios
-        .get(`https://nutritrics-backend.herokuapp.com/api/v1/user/showUser/${id}`)
-        .then((response) => {
-         
-         user=response.data;
-         console.log(user);
+            weight:"",
+            createdAt:"",
+            updatedAt:"",
+            user:{}
         });
-        const weightLog={
-            id:this.state.id,
-            weight:this.state.weight,
-            createdAt:moment(this.state.createdAt).format('YYYY-MM-DD'),
-            updatedAt:moment(this.state.updatedAt).format('YYYY-MM-DD'),
-            user:user,
-        };
+        const navigate=useNavigate();
 
-        console.log(weightLog);
-        this.props.createWeightLog(weightLog)
-            .then((data)=>{
-                this.setState({
-                   
-                 id:data.id,
-                weight:data.weight,
-                createdAt:data.createdAt,
-                updatedAt:data.createdAt,
-                user:data.user,
-                submitted:true
-            });
-            console.log(data);
-            this.props.navigate(`/weightLogs/${data.user.userId}`);
-            // alert("Weight Log added successfully");
-
-            })
-            .catch((e)=>{
+//  handleUser(u){
+//     this.setState({
+//         user:u
+//     });
+// }
+useEffect(() => {
+    axios
+    .get(` https://nutritrics-backend.herokuapp.com/api/v1/user/getUser/${localStorage.email}`,{
+      headers:{
+        "Authorization": localStorage.jwtToken
+      }
+    })
+    .then((res) => {
+        console.log(res);
+      setWeightLog((weightLog)=>({...weightLog, user:res.data}));
+   })
+    .catch((err) => console.log(err));
+}, []);
+    
+    const handleChange=(event)=>{
+       setWeightLog((weightLog)=>({
+              ...weightLog,
+              [event.target.name]: event.target.value,
+        }));
+    };
+    const handleSubmit=(event)=>{
+        event.preventDefault();
+        axios
+        .post("https://nutritrics-backend.herokuapp.com/api/v1/weightLog/addWeightLog",weightLog,{
+            headers:{
+                "Authorization":localStorage.jwtToken
+            }
+        })
+        .then((response) => {
+            alert("Weight Log added successfully!"); 
+            navigate("/weightLogs");
+        })
+        .catch((e)=>{
                 console.log(e);
                 alert("Could not add WeightLog because of some error");
-            });
-    }
-    render(){
-        var className=this.props.userId===""?"":"disable";
-        
-    return (
-        
-        <div data-testid="test-1">
-           
-                <div>
-                   
-                    <h1 >Add WeightLog Page </h1>
-                    <Form >
-                        <FormGroup>
-                            <Label for="weight">Weight</Label>
-                            <Input type="number" 
-                            id="weight" 
-                            name=" weight"
-                             placeholder="Enter new Weight"
+        });
+    };   
+        return (
+        <div style={{marginLeft:'auto', marginRight: 'auto'}}  className="w-75 border p-3 mt-3">
+             <h1>Add Weight Log Page</h1>
+             <form onSubmit={handleSubmit}>
+                    <div className="mb-3"> 
+                        <label htmlFor="weight" className="form-label float-start" >Weight:</label>
+                        <input 
+                             type="number" 
+                             id="weight" 
+                             name="weight"
+                             className="form-control" 
+                             placeholder="Enter Weight"
                              required
-                             value={this.state.weight}
-                             onChange={this.handleChangeWeight}/> 
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Label for="createdAt">Created At</Label>
-                            <Input
-                             type="date"
+                             value={weightLog.weight}
+                             onChange={handleChange}
+                             /> 
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="createdAt" className="form-label float-start">Created At:</label>
+                        <input
+                            type="date"
                             name="createdAt"
+                            className="form-control" 
                             id="createdAt"
-                            value={this.state.createdAt}
-                            onChange={this.handleChangeDate1}
+                            value={weightLog.createdAt}
+                            onChange={handleChange}
                             />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Label for="updatedAt">Updated At</Label>
-                            <Input
-                             type="date"
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="updatedAt" className="form-label float-start">Updated At:</label>
+                        <input
+                            type="date"
                             name="updatedAt"
+                            className="form-control" 
                             id="updatedAt"
-                            value={this.state.updatedAt}
-                            onChange={this.handleChangeDate2}
+                            value={weightLog.updatedAt}
+                            onChange={handleChange}
                            />
-                        </FormGroup>
-                       { this.props.userId===""?(
-                        <FormGroup>
-                            <Label for="userId">User Id</Label>
-                            <Input
-                             type="number"
-                            name="userId"
-                            id="userId"
-                            value={this.state.user.userId}
-                            onChange={this.handleChangeUser}
-                            
-                           />
-                        </FormGroup>
-                       ):(
-                        <FormGroup>
-                        <Label for="userId">User Id</Label>
-                        <Input
-                         type="number"
-                        name="userId"
-                        id="userId"
-                        value={this.props.userId}
-                        disabled
-                        
-                       />
-                    </FormGroup>
-                       )}
-                        <Button onClick={this.handleSubmit}>Submit</Button>
-                    </Form>
-                </div>
-           
-            
-    </div> 
-    );
-}
-    }
-    function WithNavigate(props) {
-        let navigate = useNavigate();
-        const location = useLocation();
-        
-        if(location.state){
-  const { user } = location.state;
-  console.log(user);
-  return <AddWeightLog {...props} userId={user} navigate={navigate} />
-        } else {
-        return <AddWeightLog {...props} userId="" navigate={navigate} />
-        }
-    }
-    
-    //export default WithNavigate
+                    </div>
+                    {console.log(weightLog.createdAt)}
+                    <div class="d-grid gap-2">
+                        <button type="Submit" className="btn btn-primary " >
+                            Add
+                        </button>
+                    </div>    
+                </form>
+        </div> 
+        );
+};
 
-export default connect(null,{ createWeightLog })(WithNavigate);
+
+export default AddWeightLog;

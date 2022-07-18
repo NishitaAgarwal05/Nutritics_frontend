@@ -69,10 +69,7 @@ class WeightLogList extends Component {
 
     return (
       <div className="w-75 mx-auto mt-3" style={{minHeight: "100vh"}}>
-      
-        <h1>Admin Page</h1>
-         
-         <Link 
+       <Link 
          to="/weightLog/add"
          type="button" className="btn  float-end" style={{backgroundColor:"#f3a82f" ,color:"white"}}>
          Add WeighLog
@@ -80,7 +77,7 @@ class WeightLogList extends Component {
      <table className="table table-striped">
        <thead>
          <tr>
-           <th>User Id</th>
+           <th>Id</th>
            <th>Weight</th>
            <th>Created At</th>
            <th>Updated At</th>
@@ -89,7 +86,7 @@ class WeightLogList extends Component {
        <tbody>
          {weightLogs && weightLogs.map((weightLog, index) => (
            <tr>
-             <td>{weightLog.user.userId}</td>
+             <td>{weightLog.id}</td>
              <td>{weightLog.weight}</td>
              <td>{weightLog.createdAt}</td>
              <td>{weightLog.updatedAt}</td>
@@ -97,7 +94,7 @@ class WeightLogList extends Component {
              <Link  to={`/weightLog/update/${weightLog.id}`}>
                <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FiEdit2></FiEdit2></Button>
              </Link>
-             <Button style={{ margin: '.25rem' }} outline color="danger" size="sm" onClick={()=>this.handleDelete(weightLog.id)}><RiDeleteBinLine></RiDeleteBinLine></Button>
+             <Button style={{ margin: '.25rem' }} outline color="danger" size="sm" onClick={()=>this.handleDelete.bind(this,weightLog.id)}><RiDeleteBinLine></RiDeleteBinLine></Button>
              
              </td>
            </tr>
