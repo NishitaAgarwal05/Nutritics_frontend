@@ -36,15 +36,17 @@ const NavBar = () => {
         <Link to={"/dietPlan"} className="nav-link">
           Diet Plans
         </Link>
-        {/* <Link to={"/payments"} className="nav-link">
-          Payments
-        </Link> */}
-        {/* { localStorage.length ===0?null:
-          localStorage.role[0]==='A' ?
-          <Link to={"/userlist"} className="nav-link">
-            Users List
-          </Link> : <div></div>
-        } */}
+        
+        { localStorage.length ===0?null:
+            localStorage.role[0]==='A' ?
+            <><Link to={"/userlist"} className="nav-link">
+              Users List
+            </Link> 
+            <Link to={"/payments"} className="nav-link">
+            Payments
+          </Link></>
+          : <div></div>
+        }
       </Nav>
     </div>
   );

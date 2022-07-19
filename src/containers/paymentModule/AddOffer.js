@@ -47,16 +47,16 @@ class AddOffer extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit");
-    //  // update state with errors after validation
-    //  this.setState({ errors: this.validate() });
-    //  console.log(this.state.errors);
-    //  if (this.state.errors) return;
-     // Send post request to rest api
+    let data={};
     axios
-      .post(`https://nutritrics-backend.herokuapp.com/api/v1/payment/addOffer?offerPrice=${this.state.pay.offerPrice}`)
+      .post(`https://nutritrics-backend.herokuapp.com/api/v1/payment/addOffer?offerPrice=${this.state.pay.offerPrice}`,data,{
+        headers:{
+          "Authorization" : localStorage.jwtToken
+        }
+      })
       .then((res) => {
           console.log(res.data);
-          alert("Added Offer successfully!");
+          alert("Offer added successfully!");
           this.props.navigate("/payments");
       })
       .catch((err) => {

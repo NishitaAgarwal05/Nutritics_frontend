@@ -82,9 +82,9 @@ class NutritionPlan extends Component {
           </Link>
           </td>
           <td>
-          {/* <Link  to={`/payment/add`}>
+          <Link  to={`/payment/add/${plan.id}`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm">Pay Now</Button>
-          </Link> */}
+          </Link>
           </td>
         </tr>
       ))}
