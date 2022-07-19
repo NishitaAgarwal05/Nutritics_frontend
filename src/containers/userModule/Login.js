@@ -50,7 +50,7 @@ const Login = (props) => {
 
     return (
       <Row className="justify-content-md-center" style={{margin:"10vh", height:"100vh"}}>
-        <Col xs={5}>
+        <Col className="col-sm-10 col-md-6 col-lg-5">
         {show && props.message && (
           <Alert variant="success" onClose={() => setShow(false)} dismissible>
             {props.message}

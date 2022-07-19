@@ -80,8 +80,6 @@ class NutritionPlan extends Component {
           <Link  to={`/nutritionPlan/details/${plan.id}`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm"><FcInfo></FcInfo></Button>
           </Link>
-          </td>
-          <td>
           <Link  to={`/payment/add/${plan.id}`}>
             <Button style={{ margin: '.25rem' }} outline color="primary" size="sm">Pay Now</Button>
           </Link>

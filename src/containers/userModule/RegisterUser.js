@@ -67,7 +67,7 @@ const RegisterUser = (props) => {
           <MyToast show={show} message={message} type={"success"} />
         </div>
         <Row className="justify-content-md-center" style={{margin:"10vh", height:"100vh"}}>
-        <Col xs={5}>
+        <Col className="col-sm-10 col-md-6 col-lg-5">
         <Card className={"border border-dark bg-dark text-white"}>
         <Card.Header>
           <div style={{float:"left"}}>
